@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:BaseContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TechnoRely.Views;assembly=TechnoRely"
+    xmlns:converters="clr-namespace:TechnoRely.Converters;assembly=TechnoRely"
+    x:Class="TechnoRely.Views.PopularArtistsView"
+    NavigationPage.HasBackButton="False">
+    <NavigationPage.TitleView>
+        <Label
+            TextColor="{Binding NavbarColor}"
+            FontSize="18"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Popular Artists in "/>
+                    <Span Text="{Binding SelectedCountry}"/>
+                    <Span Text=" ↓"/>
+                </FormattedString>
+            </Label.FormattedText>
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding SelectCountryCommand}"/>
+            </Label.GestureRecognizers>
+        </Label>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="Auto, *">
+            <Label
+                Grid.Row="0"
+                TextColor="Black"
+                BackgroundColor="Red"
+                FontSize="18"
+                Text="No internet connection"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                IsVisible="{Binding IsOffline}"/>
+            <Switch
+                Grid.Row="0"
+                HorizontalOptions="End"
+                IsVisible="{Binding IsSwitcherVisible}"
+                IsToggled="{Binding IsToggle}"/>
+            <CollectionView
+                Grid.Row="1"
+                ItemsSource="{Binding ArtistsSource}"
+                SelectedItem="{Binding SelectedArtistModel}"
+                EmptyView="No items to display" 
+                SelectionMode="Single"
+                ItemsLayout="VerticalList"
+                ItemSizingStrategy="MeasureFirstItem">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10"
+                              RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.RowSpan="2"
+                                   Source="{Binding Image[1].Text}"
+                                   Aspect="AspectFit"
+                                   WidthRequest="50"
+                                   HeightRequest="50"/>
+                            <Label Grid.Column="1"
+                                   Text="{Binding Name}"
+                                   FontSize="18"
+                                   TextColor="Black"/>
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   TextColor="DarkGray"
+                                   FontSize="16"
+                                   Text="{Binding Listeners, Converter={converters:ListenersToFormattedConverter}}"
+                                   VerticalOptions="Start" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</views:BaseContentView>

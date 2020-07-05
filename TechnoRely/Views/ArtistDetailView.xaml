@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:BaseContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:TechnoRely.Converters;assembly=TechnoRely"
+    xmlns:views="clr-namespace:TechnoRely.Views;assembly=TechnoRely"
+    x:Class="TechnoRely.Views.ArtistDetailView"
+    Title="{Binding Artist.Name}">
+    <ContentPage.Content>
+        <StackLayout
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <Label
+                TextColor="Black"
+                BackgroundColor="Red"
+                FontSize="18"
+                Text="No internet connection"
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding IsOffline}"/>
+            <Image
+                Source="{Binding Artist.Image[2].Text}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                WidthRequest="300"
+                HeightRequest="300"
+                Margin="0, 20, 0, 0"/>
+            <ListView
+                ItemsSource="{Binding AlbumsSource}"
+                SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell
+                            Text="{Binding Name}"
+                            Detail="{Binding PlayCount}"
+                            TextColor="Black"
+                            DetailColor="DarkGray"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</views:BaseContentView>
